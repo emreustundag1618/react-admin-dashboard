@@ -9,15 +9,15 @@ import { useStateContext } from '../contexts/ContextProvider';
 
 const Sidebar = () => {
 
-  const { activeMenu, setActiveMenu, screenSize } = useStateContext();
+  const { activeMenu, setActiveMenu, screenSize, currentColor } = useStateContext();
   const handleCloseSidebar = () => {
-    if(activeMenu && screenSize <= 900) {
+    if (activeMenu && screenSize <= 900) {
       setActiveMenu(false)
     }
   }
   const activeLink = "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-white text-md m-2 bg-light-gray";
   const normalLink = "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-gray text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2"
-  
+
   return (
     <div>
       <div className="ml-3 h-screen md:overflow-hidden overflow-auto 
@@ -30,7 +30,7 @@ const Sidebar = () => {
             </Link>
             <TooltipComponent content="Menu" position='BottomCenter'>
               <button type="button"
-                onClick={() => setActiveMenu((prevActiveMenu ) => !prevActiveMenu)}
+                onClick={() => setActiveMenu((prevActiveMenu) => !prevActiveMenu)}
                 className="text-xl rounded-full p-3 hover:bg-light-gray mt-4 block md:hidden">
                 <MdOutlineCancel />
               </button>
@@ -46,6 +46,9 @@ const Sidebar = () => {
                 {item.links.map((link) => (
                   <NavLink to={`/${link.name}`}
                     key={link.name}
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? currentColor : ""
+                    })}
                     onClick={handleCloseSidebar}
                     className={({ isActive }) =>
                       isActive ? activeLink :
@@ -64,7 +67,7 @@ const Sidebar = () => {
 
       </div>
 
-    </div>
+    </div >
   )
 }
 
